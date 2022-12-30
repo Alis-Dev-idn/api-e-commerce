@@ -16,6 +16,9 @@ class ExpressRoute {
 
     static User() {
         this.user.get("/", UserController.GetUser);
+        this.user.post("/", UserController.CreateUser);
+        this.user.delete("/", UserController.deleteUser);
+        this.user.post("/login", UserController.userLogin);
 
         return this.user;
     }

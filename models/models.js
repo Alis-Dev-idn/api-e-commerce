@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-
+const idShop = mongoose.Types.ObjectId;
 class Models {
 
     static UserModel() {
@@ -8,7 +8,15 @@ class Models {
             username: String,
             email: String,
             password: String,
-            active: Boolean
+            gender: String,
+            phone: Number,
+            birthday: Number,
+            active: Boolean,
+            shop: {
+                _id: false,
+                id: idShop,
+                name: String
+            }
         }, {timestamps: true});
 
         return mongoose.model("user", UserModel);

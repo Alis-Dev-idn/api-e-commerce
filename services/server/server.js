@@ -13,7 +13,6 @@ config();
 
 class ExpressServer {
     static server;
-    static socket;
     static ssl = process.env.SSL;
     static key = process.env.SSL_KEY;
     static cert = process.env.SSL_CERT;
@@ -90,7 +89,9 @@ class ExpressServer {
             /*
             * Listen / Send Message
             * */
-            this.socket = socket;
+            socket.on("notify", (data) => {
+                socket.broadcast.emit("notify", data);
+            });
 
         });
         return "Socket is created, ready to listen from client";
