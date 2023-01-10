@@ -1,5 +1,4 @@
 import UserService from "../services/user_service/user.service.js";
-import SocketClient from "../services/socket_client/socket.client.js";
 import JoiService from "../services/joi_service/joi.service.js";
 import PasswordService from "../services/password_service/password.service.js";
 
@@ -32,7 +31,6 @@ class UserController {
             if(req.query.limit) limit = req.query.limit;
             if(req.query.offset) offset = req.query.offset;
             const response = await UserService.GetUser("all", {limit, offset});
-            await SocketClient.sendData("notify", {message: "someone show users"});
             res.status(200).json(response);
         }catch (error){
             console.log(error);
