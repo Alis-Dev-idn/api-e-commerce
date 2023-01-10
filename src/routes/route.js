@@ -1,5 +1,6 @@
 import express, {Router} from "express";
 import UserController from "../controllers/user.controller.js";
+import Utils from "../utils/utils.js";
 
 class ExpressRoute {
     static route = express();
@@ -16,7 +17,7 @@ class ExpressRoute {
 
     static User() {
         this.user.get("/", UserController.GetUser);
-        this.user.post("/", UserController.CreateUser);
+        this.user.post("/", Utils.middleware, UserController.CreateUser);
         this.user.delete("/", UserController.deleteUser);
         this.user.post("/login", UserController.userLogin);
 

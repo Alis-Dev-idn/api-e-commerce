@@ -1,5 +1,6 @@
 import Models from "../../models/models.js";
 import PasswordService from "../password_service/password.service.js";
+import Utils from "../../utils/utils.js";
 
 
 class UserService {
@@ -15,6 +16,7 @@ class UserService {
                if(!cekUser) return reject({message: "username or email not found"});
                if(! await PasswordService.compareHast(data.password, cekUser.password))
                    return reject({message: "Password not Match"});
+               const token = await Utils.createToken({id: cekUser._id});
                resolve({
                   id: cekUser._id,
                   name: cekUser.name,
@@ -22,7 +24,7 @@ class UserService {
                   email: cekUser.email,
                   phone: cekUser.phone,
                   gender: cekUser.gender,
-                  token: ""
+                  token: token
                });
            } catch (error){
                reject(error);

@@ -49,17 +49,18 @@ class ExpressServer {
         /*
         * start server
         */
-        this.server.listen(this.port, () => {
-            console.log(`server running now in ${this.ssl === "true"? "https://" : "http://"}${this.host}:${this.port}`);
-            console.log("connect to mongodb ...");
-            this.RunMongoDb().then((response) => {
+        console.log("connect to mongodb ...");
+        this.RunMongoDb().then((response) => {
+            console.log(response);
+            console.log("created socket server ...");
+            this.RunSocket(this.server).then((response) => {
                 console.log(response);
-                console.log("created socket server ...");
-                this.RunSocket(this.server).then((response) => {
-                    console.log(response);
-                })
+                this.server.listen(this.port, () => {
+                    console.log(`server running now in ${this.ssl === "true"? "https://" : "http://"}${this.host}:${this.port}`);
+                });
             });
-        })
+        });
+
     }
 
     static async RunMongoDb() {

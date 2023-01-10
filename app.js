@@ -1,4 +1,4 @@
-import ExpressServer from "./services/server/server.js";
+import ExpressServer from "./src/services/server/server.js";
 
 /*
 *  Running Server
