@@ -18,6 +18,17 @@ class JoiService {
        }).allow(null)
     });
 
+    static createShop = joi.object({
+        name: joi.string().min(5).required(),
+        image: joi.string().allow(null),
+        description: joi.string().required(),
+        rating: joi.number().default(0),
+        operation: joi.object({
+            open: joi.date().required(),
+            close: joi.date().required()
+        }).allow(null),
+    });
+
     static IdValidate(id) {
         const idObject = mongoose.Types.ObjectId;
         if(idObject.isValid(id)){

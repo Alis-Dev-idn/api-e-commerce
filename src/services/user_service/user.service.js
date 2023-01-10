@@ -62,6 +62,17 @@ class UserService {
         });
     }
 
+    static async updateUser(id, data) {
+        return new Promise(async (resolve, reject) => {
+           try{
+               await this.UserModel.updateOne({_id: id}, data);
+               resolve("success update");
+           } catch (error){
+               reject(error);
+           }
+        });
+    }
+
     static async DeleteUser(id) {
         return new Promise(async (resolve, reject) => {
             try{
