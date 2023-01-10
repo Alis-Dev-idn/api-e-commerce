@@ -39,6 +39,24 @@ class Models {
 
         return mongoose.model("shop", shopModel);
     }
+
+    static item() {
+        const itemModel = new mongoose.Schema({
+            id: String,
+            name: String,
+            image: String,
+            detail: {
+                description: String,
+                condition: Boolean,
+                Heavy: Number,
+                category: String,
+            },
+            price: Number,
+            stock: Number
+        }, {timestamps: true});
+
+        return mongoose.model("item", itemModel);
+    }
 }
 
 export default Models;
