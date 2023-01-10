@@ -5,7 +5,7 @@ import Utils from "../../utils/utils.js";
 
 class UserService {
     static UserModel = Models.UserModel();
-    static dataHidden = { /*_id: 0,*/ no_hp: 0, code: 0, active: 0, createdAt: 0, updatedAt: 0, password: 0, __v: 0, phone: 0}
+    static dataHidden = { /*_id: 0,*/ no_hp: 0, code: 0, active: 0, createdAt: 0, updatedAt: 0, password: 0, __v: 0, phone: 0, shop: 0}
 
     static async userLogin(data) {
         return new Promise(async(resolve, reject) => {
@@ -36,7 +36,10 @@ class UserService {
             return this.UserModel.findById({_id: data}, hidden? this.dataHidden : {});
         }
         if(by === "username"){
-            return this.UserModel.findOne({username: data}, hidden? this.dataHidden : {});
+            /* find by similar name */
+            const count = await this.UserModel.find({username: {$regex: data, $options: "i"}}).count();
+            const output = await this.UserModel.find({username: {$regex: data, $options: "i"}}, this.dataHidden).limit(data.limit).skip(data.offset);
+            return {count, output}
         }
         if(by === "email"){
             return this.UserModel.findOne({email: data}, hidden? this.dataHidden : {});

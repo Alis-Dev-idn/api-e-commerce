@@ -26,11 +26,12 @@ class UserController {
 
     static async GetUser(req, res) {
         try{
+            let query = req.query;
             let limit = 5;
             let offset = 0;
-            if(req.query.limit) limit = req.query.limit;
-            if(req.query.offset) offset = req.query.offset;
-            const response = await UserService.GetUser("all", {limit, offset});
+            if(query.limit) limit = query.limit;
+            if(query.offset) offset = query.offset;
+            const response = await UserService.GetUser(query.username? "username" : "all", query.username? query.username :{limit, offset});
             res.status(200).json(response);
         }catch (error){
             console.log(error);
