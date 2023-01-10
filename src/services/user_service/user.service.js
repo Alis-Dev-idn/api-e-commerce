@@ -36,7 +36,10 @@ class UserService {
             return this.UserModel.findById({_id: data}, hidden? this.dataHidden : {});
         }
         if(by === "username"){
-            /* find by similar name */
+            return this.UserModel.findOne({username: data}, hidden? this.dataHidden : {});
+        }
+        if(by === "search"){
+            /* find by similar username */
             const count = await this.UserModel.find({username: {$regex: data, $options: "i"}}).count();
             const output = await this.UserModel.find({username: {$regex: data, $options: "i"}}, this.dataHidden).limit(data.limit).skip(data.offset);
             return {count, output}

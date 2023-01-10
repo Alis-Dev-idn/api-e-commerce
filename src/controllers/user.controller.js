@@ -31,7 +31,13 @@ class UserController {
             let offset = 0;
             if(query.limit) limit = query.limit;
             if(query.offset) offset = query.offset;
-            const response = await UserService.GetUser(query.username? "username" : "all", query.username? query.username :{limit, offset});
+            if(query.id){
+                if(! JoiService.IdValidate(query.id)) return res.status(400).json({error: "id not valid"});
+                const response = await UserService.GetUser("id", query.id, true);
+                if(!response) return res.status(404).json({error: `user by id ${query.id} not found`});
+                return res.status(200).json(response);
+            }
+            const response = await UserService.GetUser(query.username? "search" : "all", query.username? query.username :{limit, offset});
             res.status(200).json(response);
         }catch (error){
             console.log(error);

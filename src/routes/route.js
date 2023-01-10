@@ -31,8 +31,8 @@ class ExpressRoute {
     static shopRoute() {
         this.shop.get("/", ShopController.getShop);
         this.shop.post("/", Utils.middleware, ShopController.createShop);
-        this.shop.put("/", ShopController.updateShop);
-        this.shop.delete("/", ShopController.deleteShop);
+        this.shop.put("/", Utils.middleware, ShopController.updateShop);
+        this.shop.delete("/", Utils.middleware, ShopController.deleteShop);
 
         return this.shop;
     }

@@ -4,11 +4,16 @@ import JoiService from "../services/joi_service/joi.service.js";
 
 class ShopController {
     static async getShop(req, res) {
+        let limit = 10;
+        let skip = 0;
         const query = req.query;
-        ShopService.getShop(query.name ? query.name : null).then((response) => {
+        if(query.limit) limit = query.limit;
+        if(query.skip) skip = query.skip;
+        ShopService.getShop("search",query.name ? query.name : null, {limit, skip}).then((response) => {
             if(!response) return res.status(400).json({error: `shop by name ${query.name} not found`});
             res.status(200).json(response);
         }).catch(error => {
+            console.log(error);
             res.status(500).json({error: "Internal Error"});
         });
     }
