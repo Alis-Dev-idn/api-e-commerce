@@ -7,9 +7,12 @@ class ShopController {
         let limit = 10;
         let skip = 0;
         const query = req.query;
-        if(query.limit) limit = query.limit;
-        if(query.skip) skip = query.skip;
-        ShopService.getShop("search",query.name ? query.name : null, {limit, skip}).then((response) => {
+        if(query.limit) limit = Number(query.limit);
+        if(query.skip) skip = Number(query.skip);
+        ShopService.getShop(
+            query.global && query.global === "true"? `${query.all === "true"? "all" : "search"}` : "id",
+            query.global && query.global === "true"? query.name? query.name : null : query.id? query.id : null,
+            query.name? {name: query.name,limit, skip} : {limit, skip}).then((response) => {
             if(!response) return res.status(400).json({error: `shop by name ${query.name} not found`});
             res.status(200).json(response);
         }).catch(error => {

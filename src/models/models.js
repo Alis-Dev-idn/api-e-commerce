@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-const idShop = mongoose.Types.ObjectId;
+// const idShop = mongoose.Types.ObjectId;
 class Models {
 
     static UserModel() {
@@ -12,13 +12,6 @@ class Models {
             phone: Number,
             birthday: Number,
             active: Boolean,
-            shop: [
-                {
-                    _id: false,
-                    id: idShop,
-                    name: String
-                }
-            ]
         }, {timestamps: true});
 
         return mongoose.model("user", UserModel);
@@ -26,6 +19,7 @@ class Models {
 
     static shop() {
         const shopModel = new mongoose.Schema({
+            id: String,
             name: String,
             image: String,
             description: String,
